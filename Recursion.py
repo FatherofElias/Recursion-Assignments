@@ -1,19 +1,25 @@
+# Assignment 1 Task 1 & 2
+
+
 def schedule_tasks(task_hierarchy):
     scheduled_tasks = []
 
     def traverse_and_schedule(task):
-        # Add the task to the scheduled list
+        # Schedule the current task
         scheduled_tasks.append({
             "id": task["id"],
             "name": task["name"],
             "priority": task.get("priority", 0)
         })
 
-        # Recursively schedule subtasks if any
+        # Sort subtasks by priority in descending order and recursively schedule them
         for subtask in sorted(task.get("subtasks", []), key=lambda x: x.get("priority", 0), reverse=True):
             traverse_and_schedule(subtask)
 
     traverse_and_schedule(task_hierarchy)
+
+    # Sort the final scheduled tasks by their priority
+    scheduled_tasks = sorted(scheduled_tasks, key=lambda x: x["priority"], reverse=True)
     return scheduled_tasks
 
 # Example usage:
@@ -42,8 +48,7 @@ task_hierarchy = {
         {
             "id": 3,
             "name": "Task 2",
-            "priority": 1,
-            "subtasks": []
+            "priority": 1
         }
     ]
 }
@@ -52,3 +57,5 @@ scheduled = schedule_tasks(task_hierarchy)
 print("Scheduled Tasks:")
 for task in scheduled:
     print(task)
+
+# Task 3 Tests
